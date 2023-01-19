@@ -19,3 +19,9 @@ D:\Users\WilliamHWhite\source\repos\ProAspNetCore6\PlatformApp\platform\obj\Debu
 D:\Users\WilliamHWhite\source\repos\ProAspNetCore6\PlatformApp\platform\obj\Debug\net6.0\Platform.pdb
 D:\Users\WilliamHWhite\source\repos\ProAspNetCore6\PlatformApp\platform\obj\Debug\net6.0\Platform.genruntimeconfig.cache
 D:\Users\WilliamHWhite\source\repos\ProAspNetCore6\PlatformApp\platform\obj\Debug\net6.0\ref\Platform.dll
+D:\Users\WilliamHWhite\source\repos\ProAspNetCore6\PlatformApp\Platform\bin\Debug\net6.0\Microsoft.OpenApi.dll
+D:\Users\WilliamHWhite\source\repos\ProAspNetCore6\PlatformApp\Platform\bin\Debug\net6.0\Swashbuckle.AspNetCore.Swagger.dll
+D:\Users\WilliamHWhite\source\repos\ProAspNetCore6\PlatformApp\Platform\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+D:\Users\WilliamHWhite\source\repos\ProAspNetCore6\PlatformApp\Platform\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+D:\Users\WilliamHWhite\source\repos\ProAspNetCore6\PlatformApp\Platform\obj\Debug\net6.0\Platform.MvcApplicationPartsAssemblyInfo.cs
+D:\Users\WilliamHWhite\source\repos\ProAspNetCore6\PlatformApp\Platform\obj\Debug\net6.0\Platform.csproj.CopyComplete

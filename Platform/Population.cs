@@ -5,7 +5,7 @@
         public static async Task Endpoint(HttpContext context)
         {
             int? pop = null;
-            string? city = context.Request.RouteValues["city"] as string;
+            string city = context.Request.RouteValues["city"] as string ?? "London";
 
             switch (city.ToLower())
             {
@@ -21,7 +21,8 @@
             }
             if(pop.HasValue)
             {
-                await context.Response.WriteAsync($"City: {city}; Population {pop:N0}");
+                await context.Response
+                    .WriteAsync($"City: {city}; Population {pop:N0}");
             }
             else
             {

@@ -2,12 +2,12 @@
 
 namespace Platform
 {
-    public class Capitol
+    public class Capital
     {
         private RequestDelegate? next;
 
-        public Capitol() { }
-        public Capitol(RequestDelegate nextDelegate)
+        public Capital() { }
+        public Capital(RequestDelegate nextDelegate)
         {
             next= nextDelegate;
         }
@@ -16,27 +16,27 @@ namespace Platform
         {
             string[] parts = context.Request.Path.ToString()
                 .Split('/', StringSplitOptions.RemoveEmptyEntries);
-            if ((parts.Length == 2) && (parts[0] == "capitol"))
+            if ((parts.Length == 2) && (parts[0] == "capital"))
             {
-                string? capitol = null;
+                string? capital = null;
                 string country = parts[1];
 
                 switch (country.ToLower())
                 {
                     case "uk":
-                        capitol = "London";
+                        capital = "London";
                         break;
                     case "france":
-                        capitol = "Paris";
+                        capital = "Paris";
                         break;
                     case "monaco":
                         context.Response.Redirect($"/population/{country}");
                         return;
                 }
-                if(capitol!= null)
+                if(capital!= null)
                 {
                     await context.Response
-                        .WriteAsync($"{capitol} is the capitol of {country}");
+                        .WriteAsync($"{capital} is the capitol of {country}");
                 return;
                 }
             }

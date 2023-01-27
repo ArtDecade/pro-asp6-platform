@@ -1,46 +1,25 @@
-//using Microsoft.Extensions.Options;
 using Platform;
+using Platform.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.Configure<RouteOptions>(opts =>
-{
-    opts.ConstraintMap.Add("countryName",
-        typeof(CountryRouteConstraint));
-});
-
 var app = builder.Build();
 
-app.Use(async (context, next) =>
+app.UseMiddleware<WeatherMiddleware>();
+
+//IResponseFormattter formattter = new TextRepsonseFormatter();
+app.MapGet("middleware/function", async (context) =>
 {
-    Endpoint? end = context.GetEndpoint();
-    if (end != null)
-    {
-        await context.Response
-        .WriteAsync($"{end.DisplayName} Selected \n");
-    }
-    else
-    {
-        await context.Response.WriteAsync("No endpoint selected\n");
-    }
-    await next();   
+    await TypeBroker.Formatter.Format(context,
+        "Middleware Function:  It is snowing in Chicago");
 });
 
-app.Map("{number:int}", async context =>
-{
-    await context.Response.WriteAsync("Routed to the int endpoint");
-}).WithDisplayName("Int Endpoint")
-    .Add(b => ((RouteEndpointBuilder)b).Order = 1);
+app.MapGet("endpoint/class", WeatherEndpoint.Endpoint);
 
-app.Map("{number:double}", async context =>
+app.MapGet("endpoint/function", async (context) =>
 {
-    await context.Response.WriteAsync("Routed to the double endpoint.");
-}).WithDisplayName("Double EndPoint")
-    .Add(b => ((RouteEndpointBuilder)b).Order = 2);
-
-app.MapFallback(async context =>
-{
-    await context.Response.WriteAsync("Routed to fallback endpoint.");
+    await TypeBroker.Formatter.Format(context, 
+        "Endpoint function:  It is sunny in LA.");
 });
 
 app.Run();

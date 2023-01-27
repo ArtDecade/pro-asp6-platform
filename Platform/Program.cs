@@ -3,23 +3,25 @@ using Platform.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddSingleton<IResponseFormattter, HtmlResponseFormatter>();
+
 var app = builder.Build();
 
 app.UseMiddleware<WeatherMiddleware>();
 
-//IResponseFormattter formattter = new TextRepsonseFormatter();
-app.MapGet("middleware/function", async (context) =>
+app.MapGet("middleware/function", async (HttpContext context, 
+    IResponseFormattter formattter) =>
 {
-    await TypeBroker.Formatter.Format(context,
-        "Middleware Function:  It is snowing in Chicago");
+    await formattter.Format(context, "Middleware Function:  It is snowing in Chicago");
 });
 
-app.MapGet("endpoint/class", WeatherEndpoint.Endpoint);
+//app.MapGet("endpoint/class", WeatherEndpoint.Endpoint);
+app.MapWeather("endpoint/class");
 
-app.MapGet("endpoint/function", async (context) =>
+app.MapGet("endpoint/function", async (HttpContext context,
+    IResponseFormattter formatter) =>
 {
-    await TypeBroker.Formatter.Format(context, 
-        "Endpoint function:  It is sunny in LA.");
+    await formatter.Format(context, "Endpoint function:  It is sunny in LA.");
 });
 
 app.Run();

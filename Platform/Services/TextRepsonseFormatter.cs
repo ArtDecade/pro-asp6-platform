@@ -1,6 +1,6 @@
 ﻿namespace Platform.Services
 {
-    public class TextRepsonseFormatter : IResponseFormattter
+    public class TextRepsonseFormatter : IResponseFormatter
     {
         private int _responseCounter = 0;
         private static TextRepsonseFormatter? shared;

@@ -1,6 +1,6 @@
 ﻿namespace Platform.Services
 {
-    public class HtmlResponseFormatter : IResponseFormattter
+    public class HtmlResponseFormatter : IResponseFormatter
     {
         public async Task Format(HttpContext context, string content)
         {

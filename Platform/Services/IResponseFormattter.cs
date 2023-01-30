@@ -1,6 +1,6 @@
 ﻿namespace Platform.Services
 {
-    public interface IResponseFormattter
+    public interface IResponseFormatter
     {
         Task Format(HttpContext context, string content);
     }

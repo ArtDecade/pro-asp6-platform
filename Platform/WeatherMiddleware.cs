@@ -5,21 +5,20 @@ namespace Platform
     public class WeatherMiddleware
     {
         private RequestDelegate next;
-        private IResponseFormattter formatter;
 
-        public WeatherMiddleware(RequestDelegate nextDelegate, 
-            IResponseFormattter respFormatter)
+        public WeatherMiddleware(RequestDelegate nextDelegate)
         {
             this.next = nextDelegate;
-            this.formatter = respFormatter;
         }
 
-        public async Task Invoke(HttpContext context)
+        public async Task Invoke(HttpContext context, IResponseFormatter formatter1, 
+            IResponseFormatter formatter2, IResponseFormatter formatter3)
         {
             if(context.Request.Path == "/middleware/class")
             {
-                await formatter.Format(context,
-                    "Middleware Class:  It is snowing in New Providence.");
+                await formatter1.Format(context, string.Empty);
+                await formatter2.Format(context, string.Empty);
+                await formatter3.Format(context, string.Empty);
             } else
             {
                 await next(context);

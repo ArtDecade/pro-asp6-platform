@@ -1,6 +1,6 @@
 ﻿namespace Platform.Services
 {
-    public class GuidServices : IResponseFormatter
+    public class GuidService : IResponseFormatter
     {
         private Guid guid = Guid.NewGuid();
 

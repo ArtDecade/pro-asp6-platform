@@ -1,43 +1,32 @@
 using Platform;
-using Platform.Services;
+//using Platform.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-//IWebHostEnvironment env = builder.Environment;
-IConfiguration config = builder.Configuration;
-
-//"services": {
-//"IResponseServices":  "Platform.Services.HtmlResponseFormatter"
-
-builder.Services.AddScoped<IResponseFormatter>(serviceProvider =>
-{
-    string? typeName = config["services:IResponseFormatter"];
-    return (IResponseFormatter)ActivatorUtilities
-        .CreateInstance(serviceProvider, typeName == null
-            ? typeof(GuidService) : Type.GetType(typeName, true)!);
-});
-builder.Services.AddScoped<ITimeStamper, DefaultTimeStamper>();
+builder.Services.AddSingleton(typeof(ICollection<>), typeof(List<>));
 
 var app = builder.Build();
 
-app.UseMiddleware<WeatherMiddleware>();
-
-app.MapGet("middleware/function", async (HttpContext context, 
-    IResponseFormatter formattter) =>
+app.MapGet("string", async context =>
 {
-    await formattter.Format(context, "Middleware Function:  It is snowing in Chicago");  
+    ICollection<string> collection =
+        context.RequestServices.GetRequiredService<ICollection<string>>();
+    collection.Add($"Request: {DateTime.Now.ToLongTimeString()}");
+    foreach (string str in collection)
+    {
+        await context.Response.WriteAsync($"String: {str}\n");
+    }
 });
 
-//app.MapGet("endpoint/class", WeatherEndpoint.Endpoint);
-app.MapEndpoint<WeatherEndpoint>("endpoint/class");
-
-// app.MapGet("/", () => "Hello, World!");
-
-app.MapGet("endpoint/function", async (HttpContext context) =>
+app.MapGet("int", async context =>
 {
-    IResponseFormatter formatter =
-        context.RequestServices.GetRequiredService<IResponseFormatter>();
-    await formatter.Format(context, "Endpoint function:  It is sunny in LA.");
+    ICollection<int> collection = 
+        context.RequestServices.GetRequiredService<ICollection<int>>();
+    collection.Add(collection.Count() + 1);
+    foreach (int val in collection)
+    {
+        await context.Response.WriteAsync($"Int: {val}\n");
+    }
 });
 
 app.Run();
